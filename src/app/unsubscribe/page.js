@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./unsubscribe.module.css";
 
-const page = () => {
+const Page = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -55,7 +55,7 @@ const page = () => {
           Click on "Unsubscribe" to stop receiving emails from Ventmoir on this
           email address:
         </p>
-        <center>irawo302@gmail.com</center>
+        <center>test302@gmail.com</center>
 
         <button>Unsubscribe</button>
       </form>
@@ -63,4 +63,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
