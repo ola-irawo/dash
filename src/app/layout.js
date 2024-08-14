@@ -6,7 +6,7 @@ import Footer from "@/layouts/footer/page";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Ventmoir",
+  title: "Ventmoir Newsletter",
   description:
     "Subscribe to receive the latest insights, support tips, and valuable resources on mental health.",
 };
