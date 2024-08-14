@@ -1,95 +1,100 @@
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import email from "../assets/images/email.png";
 import styles from "./page.module.css";
 
-export default function Home() {
+const Home = () => {
+  const [userEmail, setUserEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleInputChange = (e) => {
+    setUserEmail(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setMessage("");
+
+    try {
+      const response = await fetch(
+        "https://type-blog.onrender.com/newsletter/subscribe",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: userEmail }),
+        }
+      );
+
+      const data = await response.json();
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      console.log(data);
+      if (response.ok) {
+        setMessage(data.message);
+      }
+      console.log(userEmail);
+    } catch (error) {
+      setMessage(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage("");
+    }, 8000);
+  }, [message]);
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+      {message && <p className={styles.success}>{message}</p>}
+
+      <p className={styles.info}>
+        Welcome to <strong>Ventmoir</strong>, where we connect you with the
+        resources and support needed to prioritize your mental well-being.
+        Subscribe to our newsletter to stay informed with the latest articles,
+        research, and insights on mental health.
+      </p>
+
+      <section className={styles.container}>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <Image src={email} alt="Email Icon" className={styles["email-img"]} />
+
+          <div>
+            <h1 className={styles.head}>Subscribe to our Newsletter.</h1>
+            <p className={styles.text}>
+              Subscribe to receive the latest insights, support tips, and
+              valuable resources on mental health.
+            </p>
+            <input
+              type="email"
+              placeholder="Your email"
+              onChange={handleInputChange}
+              required
             />
-          </a>
-        </div>
-      </div>
+            <button disabled={isSubmitting}>
+              {isSubmitting ? "Subscribing..." : "Subscribe"}
+            </button>
+          </div>
+        </form>
+      </section>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <p className={styles.info}>
+        We respect your privacy and only use your information to deliver the
+        content you request. You can unsubscribe anytime. By subscribing, you
+        agree to let us store and process your information to provide the
+        content you requested.
+      </p>
     </main>
   );
-}
+};
+
+export default Home;
