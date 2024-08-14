@@ -1,10 +1,8 @@
 .header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  /* background-color: #333; */
 }
 
 .logo {
@@ -13,10 +11,7 @@
 }
 
 .nav {
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: 1fr 1fr;
-  justify-content: space-between;
+  display: flex;
   align-items: center;
 }
 
@@ -24,8 +19,11 @@
   color: #407bff;
   text-decoration: none;
   font-size: 16px;
-  font-size: clamp(1rem, 1vw, 2rem);
+  font-size: clamp(1.5rem, 1.5vw, 2rem);
   transition: color 0.3s;
+}
+.link:first-of-type {
+  margin-right: 2rem;
 }
 
 .link:hover {
