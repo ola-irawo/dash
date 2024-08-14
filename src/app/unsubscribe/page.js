@@ -52,8 +52,8 @@ const Page = () => {
       <form className={styles.form} onSubmit={handleSubmit}>
         <h1 className={styles.head}>Unsubscribe</h1>
         <p className={styles.text}>
-          Click on "Unsubscribe" to stop receiving emails from Ventmoir on this
-          email address:
+          Click on &quot;Unsubscribe&quot; to stop receiving emails from
+          Ventmoir on this email address:
         </p>
         <center>test302@gmail.com</center>
 
